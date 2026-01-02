@@ -22,7 +22,7 @@ class AuthService {
 
   async signup(email: string, password: string, username: string): Promise<{ user: User; token: string }> {
     try {
-      const response = await authAPI.signup(email, password);
+      const response = await authAPI.signup(email, password, username);
       const { user, token } = response.data;
 
       // Store user and token

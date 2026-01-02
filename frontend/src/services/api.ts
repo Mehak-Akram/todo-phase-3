@@ -52,8 +52,8 @@ function getApiPath(path: string): string {
 
 // Auth API functions
 export const authAPI = {
-  signup: (email: string, password: string): Promise<AxiosResponse<AuthResponse>> => {
-    return api.post(getApiPath('/auth/signup'), { email, password });
+  signup: (email: string, password: string, username: string): Promise<AxiosResponse<AuthResponse>> => {
+    return api.post(getApiPath('/auth/signup'), { email, password, username });
   },
 
   signin: (email: string, password: string): Promise<AxiosResponse<AuthResponse>> => {
