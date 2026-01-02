@@ -56,7 +56,44 @@ module.exports = {
         },
         'white': '#ffffff',
       },
+      animation: {
+        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'bounce': 'bounce 1s infinite',
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    // Enable arbitrary values support
+    function ({ addUtilities }) {
+      addUtilities({
+        '.mix-blend-multiply': {
+          'mix-blend-mode': 'multiply'
+        },
+        '.filter': {
+          'filter': 'blur(0)'
+        },
+        '.blur-3xl': {
+          'filter': 'blur(80px)'
+        },
+        '.blur-4xl': {
+          'filter': 'blur(100px)'
+        },
+        '.backdrop-blur-xl': {
+          'backdrop-filter': 'blur(12px)',
+        },
+        '.bg-white\\/40': {
+          'background-color': 'rgba(255, 255, 255, 0.4)',
+        },
+        '.border-white\\/60': {
+          'border-color': 'rgba(255, 255, 255, 0.6)',
+        },
+        '.shadow-\\[0_20px_50px_rgba\\(0\\,0\\,0\\,0\\.1\\)\\]': {
+          'box-shadow': '0 20px 50px rgba(0, 0, 0, 0.1)',
+        },
+        '.shadow-\\[0_8px_25px_rgba\\(0\\,123\\,255\\,0\\.4\\)\\]': {
+          'box-shadow': '0 8px 25px rgba(0, 123, 255, 0.4)',
+        },
+      })
+    },
+  ],
 }

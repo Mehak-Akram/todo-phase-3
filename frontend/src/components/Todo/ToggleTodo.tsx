@@ -9,7 +9,7 @@ export default function ToggleTodo({ completed, onToggle }: ToggleTodoProps) {
       type="checkbox"
       checked={completed}
       onChange={() => onToggle(!completed)}
-      className="w-5 h-5 text-blue-500 rounded focus:ring-blue-500 bg-white border-blue-500"
+      className="w-5 h-5 text-blue-500 rounded focus:ring-blue-400 bg-white/20 border-white/40"
     />
   );
 }

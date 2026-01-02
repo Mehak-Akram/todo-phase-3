@@ -39,7 +39,7 @@ export default function TodoList({ todos, onUpdateTodo, onToggleTodo, onDeleteTo
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       {todosArray.map(todo => (
         <TodoItem
           key={todo.id}
@@ -47,8 +47,6 @@ export default function TodoList({ todos, onUpdateTodo, onToggleTodo, onDeleteTo
           onUpdate={onUpdateTodo}
           onToggle={onToggleTodo}
           onDelete={onDeleteTodo}
-
-          
         />
       ))}
     </div>

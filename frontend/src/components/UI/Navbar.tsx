@@ -32,12 +32,12 @@ const Navbar = () => {
       ];
 
   return (
-    <nav className="bg-white text-blue-600 shadow-md border-b border-blue-200">
+    <nav className="bg-gradient-to-b from-blue-500/20 to-blue-600/20 backdrop-blur-lg border-b border-white/20 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href={isClient && isAuthenticated ? '/todos' : '/'}>
-              <span className="text-xl font-extrabold cursor-pointer text-blue-600">Todo App</span>
+              <span className="text-2xl font-extrabold cursor-pointer text-black-900">Todo App</span>
             </Link>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
@@ -45,10 +45,10 @@ const Navbar = () => {
                   navLinks.map((link) => (
                     <Link key={link.href} href={link.href}>
                       <span
-                        className={`px-3 py-2 rounded-md text-sm font-medium cursor-pointer ${
+                        className={`px-3 py-2 rounded-md text-1xl font-medium cursor-pointer ${
                           router.pathname === link.href
-                            ? 'bg-blue-600 text-white'
-                            : 'text-blue-600 hover:bg-blue-100 hover:text-blue-800'
+                            ? 'bg-purple-300/30 text-black-900'
+                            : 'text-black-900 hover:bg-purple-300/30 hover:text-black-900'
                         }`}
                       >
                         {link.name}
@@ -57,7 +57,7 @@ const Navbar = () => {
                   ))
                 ) : (
                   // Render a placeholder during SSR to prevent hydration mismatch
-                  <div className="px-3 py-2 rounded-md text-sm font-medium text-blue-600">Loading...</div>
+                  <div className="px-3 py-2 rounded-md text-sm font-medium text-white/90">Loading...</div>
                 )}
               </div>
             </div>
@@ -66,7 +66,7 @@ const Navbar = () => {
             {isClient && isAuthenticated && (
               <button
                 onClick={handleSignOut}
-                className="px-4  text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 mb-3 min-w-[90px] h-[38px]"
+                className="px-4 text-sm font-medium text-black-900 bg-gradient-to-r from-blue-500 to-purple-600 rounded-md hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 min-w-[90px] h-[38px] shadow-md"
               >
                 Sign Out
               </button>
@@ -75,7 +75,7 @@ const Navbar = () => {
           <div className="-mr-2 flex md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-blue-600 hover:text-blue-800 hover:bg-blue-100 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-purple-400/90 hover:text-black-900 hover:bg-purple-300/10 focus:outline-none"
             >
               <svg
                 className="h-6 w-6"
@@ -99,7 +99,7 @@ const Navbar = () => {
       {/* Mobile menu */}
       {isMenuOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-blue-200">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gradient-to-b from-blue-500/20 to-blue-600/20 backdrop-blur-sm border-t border-white/20">
             {isClient ? (
               <>
                 {navLinks.map((link) => (
@@ -107,8 +107,8 @@ const Navbar = () => {
                     <span
                       className={`block px-3 py-2 rounded-md text-base font-medium cursor-pointer ${
                         router.pathname === link.href
-                          ? 'bg-blue-600 text-white'
-                          : 'text-blue-600 hover:bg-blue-100 hover:text-blue-800'
+                          ? 'bg-purple-300/30 text-black-900'
+                          : 'text-purple-400/90 hover:bg-purple-300/30 hover:text-black-900'
                       }`}
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -120,7 +120,7 @@ const Navbar = () => {
                   href="https://github.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-blue-600 hover:bg-blue-100 hover:text-blue-800"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-purple-400/90 hover:bg-purple-300/30 hover:text-black-900"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   GitHub
@@ -128,7 +128,7 @@ const Navbar = () => {
                 {isAuthenticated && (
                   <button
                     onClick={handleSignOut}
-                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 min-w-[90px]"
+                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-purple-400/90 hover:text-black-900 hover:bg-purple-300/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 min-w-[90px]"
                   >
                     Sign Out
                   </button>
@@ -136,7 +136,7 @@ const Navbar = () => {
               </>
             ) : (
               // Render placeholder during SSR
-              <div className="px-3 py-2 rounded-md text-base font-medium text-blue-600">Loading...</div>
+              <div className="px-3 py-2 rounded-md text-base font-medium text-white/90">Loading...</div>
             )}
           </div>
         </div>

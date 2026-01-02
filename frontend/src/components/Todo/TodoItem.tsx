@@ -31,7 +31,7 @@ export default function TodoItem({ todo, onUpdate, onToggle, onDelete }: TodoIte
   };
 
   return (
-    <div className={`flex items-center justify-between p-4 border border-blue-500 rounded-md ${todo.completed ? 'bg-white text-blue-300' : 'bg-white text-blue-500'}`}>
+    <div className={`flex items-center justify-between p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl ${todo.completed ? 'text-white/40' : 'text-white'}`}>
       <div className="flex items-center flex-1">
         <ToggleTodo completed={todo.completed} onToggle={handleToggle} />
         {isEditing ? (
@@ -42,7 +42,7 @@ export default function TodoItem({ todo, onUpdate, onToggle, onDelete }: TodoIte
           />
         ) : (
           <span
-            className={`ml-3 flex-1 ${todo.completed ? 'line-through text-blue-300' : 'text-blue-500'}`}
+            className={`ml-3 flex-1 ${todo.completed ? 'line-through' : ''}`}
             onClick={() => setIsEditing(true)}
           >
             {todo.content}
@@ -55,7 +55,7 @@ export default function TodoItem({ todo, onUpdate, onToggle, onDelete }: TodoIte
           <>
             <button
               onClick={() => setIsEditing(true)}
-              className="px-3 py-2 text-sm font-medium text-blue-700 bg-white border border-blue-300 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 min-w-[60px]"
+              className="px-3 py-1.5 text-sm font-medium text-white/90 bg-white/10 rounded-md hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 transition-colors duration-200 border border-white/20"
             >
               Edit
             </button>

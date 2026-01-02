@@ -24,25 +24,25 @@ export default function EditTodo({ initialContent, onSave, onCancel }: EditTodoP
   };
 
   return (
-    <div className="flex items-center flex-1">
+    <div className="flex items-center flex-1 w-full">
       <input
         type="text"
         value={content}
         onChange={(e) => setContent(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="flex-1 px-2 py-1 border border-blue-500 bg-white text-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="flex-1 px-3 py-1.5 bg-white/10 border border-white/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent backdrop-blur-sm"
         autoFocus
       />
-      <div className="flex space-x-2 ml-3">
+      <div className="flex space-x-2 ml-2">
         <button
           onClick={handleSave}
-          className="px-3 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 min-w-[60px]"
+          className="px-3 py-1.5 text-sm font-medium text-white bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 shadow-md"
         >
           Save
         </button>
         <button
           onClick={onCancel}
-          className="px-3 py-2 text-sm font-medium text-blue-700 bg-white border border-blue-300 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 min-w-[60px]"
+          className="px-3 py-1.5 text-sm font-medium text-white bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-300 shadow-md"
         >
           Cancel
         </button>
