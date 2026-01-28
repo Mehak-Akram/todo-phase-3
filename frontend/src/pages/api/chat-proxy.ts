@@ -6,17 +6,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Determine the backend URL and API path based on environment
+  const baseUrl = process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8000'  // Local backend
+    : process.env.NEXT_PUBLIC_API_URL; // Production backend
+
+  // Both local and deployed versions use the same API path structure
+  const apiPath = '/api/v1/chat';  // Consistent path for both environments
+
   try {
     const { message, conversation_id } = req.body;
     const token = req.headers.authorization;
-
-    // Determine the backend URL and API path based on environment
-    const baseUrl = process.env.NODE_ENV === 'development'
-      ? 'http://localhost:8000'  // Local backend
-      : process.env.NEXT_PUBLIC_API_URL; // Production backend
-
-    // Both local and deployed versions use the same API path structure
-    const apiPath = '/api/v1/chat';  // Consistent path for both environments
 
     console.log('Chat proxy: Forwarding request to:', `${baseUrl}${apiPath}`);
     console.log('Chat proxy: Headers being sent:', {

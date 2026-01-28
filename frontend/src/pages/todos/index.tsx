@@ -249,8 +249,8 @@ export default function Todos() {
           console.log("DEBUG: Response status:", response.status);
           console.log("DEBUG: Response data:", response.data);
 
-          // Ensure response.data.todos is an array before setting
-          const todosData = Array.isArray(response.data.todos) ? response.data.todos : response.data;
+          // Extract todos array from response
+          const todosData = response.data.todos;
           console.log("DEBUG: Processed todos data:", todosData);
 
           // Update the todos state with fresh data
