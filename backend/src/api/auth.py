@@ -14,7 +14,7 @@ from ..config import settings
 
 router = APIRouter()
 
-@router.post("/auth/signup", response_model=UserRead)
+@router.post("/signup", response_model=UserRead)
 def signup(user_create: UserCreate, session: Session = Depends(get_session)):
     """Create a new user account"""
     # Check if user already exists
@@ -29,7 +29,7 @@ def signup(user_create: UserCreate, session: Session = Depends(get_session)):
     db_user = create_user_service(session, user_create)
     return db_user
 
-@router.post("/auth/signin")
+@router.post("/signin")
 def signin(user_create: UserCreate, session: Session = Depends(get_session)):
     """Authenticate user and return token"""
     user = authenticate_user(session, user_create.email, user_create.password)
@@ -54,7 +54,7 @@ def signin(user_create: UserCreate, session: Session = Depends(get_session)):
         "token": access_token
     }
 
-@router.post("/auth/signout")
+@router.post("/signout")
 def signout():
     """Sign out current user"""
     return {"message": "Signed out successfully"}

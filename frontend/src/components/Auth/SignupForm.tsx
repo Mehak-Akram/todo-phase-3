@@ -16,8 +16,8 @@ export default function SignupForm({ onSuccess }: SignupFormProps) {
     setError('');
 
     try {
-      // Updated to include username
-      await authService.signup(email, password, username);
+      // Call signup with only email and password as the service only supports these params
+      await authService.signup(email, password);
       onSuccess();
     } catch (err: any) {
       setError(err.message || 'An error occurred during signup');

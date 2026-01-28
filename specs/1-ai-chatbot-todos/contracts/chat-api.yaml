@@ -1,0 +1,165 @@
+# API Contract: Chat Service
+
+**Service**: Chat API for AI Chatbot
+**Version**: 1.0.0
+**Base URL**: `/api/v1`
+
+## Endpoints
+
+### POST /chat
+Initiates or continues a conversation with the AI chatbot.
+
+#### Request
+```json
+{
+  "message": "What tasks do I have today?",
+  "conversation_id": "uuid-string",
+  "metadata": {}
+}
+```
+
+**Headers**:
+- `Authorization: Bearer {token}` (Required)
+- `Content-Type: application/json`
+
+**Parameters**:
+- `message`: The user's message to the chatbot (Required, String, 1-10000 chars)
+- `conversation_id`: ID of existing conversation (Optional, UUID)
+- `metadata`: Additional metadata for the request (Optional, Object)
+
+#### Response
+```json
+{
+  "conversation_id": "uuid-string",
+  "message_id": "uuid-string",
+  "response": "You have 2 tasks today...",
+  "timestamp": "2023-10-01T12:00:00Z",
+  "tool_calls": [],
+  "error": null
+}
+```
+
+**Success Response (200)**:
+- `conversation_id`: ID of the conversation
+- `message_id`: ID of the response message
+- `response`: The AI-generated response
+- `timestamp`: When the response was generated
+- `tool_calls`: Array of any tools called during processing
+- `error`: Null if successful
+
+**Error Responses**:
+- `400 Bad Request`: Invalid request parameters
+- `401 Unauthorized`: Invalid or missing authentication token
+- `403 Forbidden`: User not authorized to access conversation
+- `429 Too Many Requests`: Rate limit exceeded
+- `500 Internal Server Error`: Server error during processing
+
+### GET /conversations
+Retrieves a list of user's conversations.
+
+#### Request
+```json
+{}
+```
+
+**Headers**:
+- `Authorization: Bearer {token}` (Required)
+
+#### Response
+```json
+[
+  {
+    "id": "uuid-string",
+    "title": "Today's tasks",
+    "created_at": "2023-10-01T10:00:00Z",
+    "updated_at": "2023-10-01T12:00:00Z",
+    "is_active": true
+  }
+]
+```
+
+**Success Response (200)**:
+- Array of conversation objects with metadata
+
+**Error Responses**:
+- `401 Unauthorized`: Invalid or missing authentication token
+- `500 Internal Server Error`: Server error during processing
+
+### GET /conversations/{conversation_id}/messages
+Retrieves messages from a specific conversation.
+
+#### Request
+```json
+{}
+```
+
+**Path Parameters**:
+- `conversation_id`: ID of the conversation (Required, UUID)
+
+**Headers**:
+- `Authorization: Bearer {token}` (Required)
+
+#### Response
+```json
+{
+  "conversation_id": "uuid-string",
+  "messages": [
+    {
+      "id": "uuid-string",
+      "role": "user",
+      "content": "What tasks do I have today?",
+      "timestamp": "2023-10-01T11:00:00Z",
+      "metadata": {}
+    },
+    {
+      "id": "uuid-string",
+      "role": "assistant",
+      "content": "You have 2 tasks today...",
+      "timestamp": "2023-10-01T11:00:05Z",
+      "metadata": {}
+    }
+  ]
+}
+```
+
+**Success Response (200)**:
+- `conversation_id`: ID of the conversation
+- `messages`: Array of messages in chronological order
+
+**Error Responses**:
+- `401 Unauthorized`: Invalid or missing authentication token
+- `403 Forbidden`: User not authorized to access conversation
+- `404 Not Found`: Conversation not found
+- `500 Internal Server Error`: Server error during processing
+
+### DELETE /conversations/{conversation_id}
+Deletes a conversation and all its messages.
+
+#### Request
+```json
+{}
+```
+
+**Path Parameters**:
+- `conversation_id`: ID of the conversation (Required, UUID)
+
+**Headers**:
+- `Authorization: Bearer {token}` (Required)
+
+#### Response
+```json
+{
+  "success": true,
+  "deleted_messages_count": 5
+}
+```
+
+**Success Response (200)**:
+- `success`: Indicates successful deletion
+- `deleted_messages_count`: Number of messages deleted
+
+**Error Responses**:
+- `401 Unauthorized`: Invalid or missing authentication token
+- `403 Forbidden`: User not authorized to delete conversation
+- `404 Not Found`: Conversation not found
+- `500 Internal Server Error`: Server error during processing

@@ -24,6 +24,7 @@ const Navbar = () => {
   const navLinks = isAuthenticated
     ? [
         { name: 'Todos', href: '/todos' },
+        { name: 'Chat', href: '/chat' },
         { name: 'Profile', href: '/' },
       ]
     : [
@@ -37,7 +38,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href={isClient && isAuthenticated ? '/todos' : '/'}>
-              <span className="text-2xl font-extrabold cursor-pointer text-black-900">Todo App</span>
+              <span className="text-2xl font-extrabold cursor-pointer text-black">Todo App</span>
             </Link>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
@@ -47,8 +48,8 @@ const Navbar = () => {
                       <span
                         className={`px-3 py-2 rounded-md text-1xl font-medium cursor-pointer ${
                           router.pathname === link.href
-                            ? 'bg-purple-300/30 text-black-900'
-                            : 'text-black-900 hover:bg-purple-300/30 hover:text-black-900'
+                            ? 'bg-purple-300/30 text-black'
+                            : 'text-black hover:bg-purple-300/30 hover:text-black'
                         }`}
                       >
                         {link.name}

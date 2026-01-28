@@ -31,15 +31,7 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-**Spec-Driven Development Compliance**: Verify all development follows the approved specification lifecycle: Constitution → Specs → Plan → Tasks → Implement. No code may be written without approved specs and tasks.
-
-**Agent Behavior Compliance**: Ensure no manual coding by humans, no feature invention, and no deviation from approved specifications. Refinement must occur at spec level, not code level.
-
-**Phase Governance Compliance**: Verify each phase is strictly scoped by its specification and future-phase features do not leak into earlier phases. Architecture may evolve only through updated specs and plans.
-
-**Technology Stack Compliance**: Confirm adherence to required technology stack: Python for backend, Next.js for frontend (later phases), FastAPI, SQLModel, Neon DB, OpenAI Agents SDK, MCP, Docker, Kubernetes, Kafka, Dapr (later phases).
-
-**Quality Principles Compliance**: Ensure clean architecture with clear separation of concerns, stateless services where required, and cloud-native readiness.
+[Gates determined based on constitution file]
 
 ## Project Structure
 

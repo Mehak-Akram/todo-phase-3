@@ -100,14 +100,6 @@
 - **[Entity 1]**: [What it represents, key attributes without implementation]
 - **[Entity 2]**: [What it represents, relationships to other entities]
 
-## Constitution Compliance *(mandatory)*
-
-**Spec-Driven Development**: This specification must follow the approved lifecycle and serve as the foundation for the Plan and Tasks phases. All implementation must trace back to this specification.
-
-**Technology Stack**: This specification must align with the required technology stack: Python for backend, Next.js for frontend (later phases), FastAPI, SQLModel, Neon DB, OpenAI Agents SDK, MCP, Docker, Kubernetes, Kafka, Dapr (later phases).
-
-**Quality Principles**: This specification must ensure clean architecture with clear separation of concerns, stateless services where required, and cloud-native readiness.
-
 ## Success Criteria *(mandatory)*
 
 <!--

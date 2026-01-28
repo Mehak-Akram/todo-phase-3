@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { AuthResponse, TodoResponse, User, Todo } from '../types';
 
 // Check if we should include the /api prefix based on environment variable
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://mehak-akram-todo-app-chatbot.hf.space';
 const USE_API_PREFIX = process.env.NEXT_PUBLIC_USE_API_PREFIX === 'true';
 
 // Create axios instance
@@ -52,16 +52,16 @@ function getApiPath(path: string): string {
 
 // Auth API functions
 export const authAPI = {
-  signup: (email: string, password: string, username: string): Promise<AxiosResponse<AuthResponse>> => {
-    return api.post(getApiPath('/auth/signup'), { email, password, username });
+  signup: (email: string, password: string): Promise<AxiosResponse<AuthResponse>> => {
+    return api.post(getApiPath('/signup'), { email, password });
   },
 
   signin: (email: string, password: string): Promise<AxiosResponse<AuthResponse>> => {
-    return api.post(getApiPath('/auth/signin'), { email, password });
+    return api.post(getApiPath('/signin'), { email, password });
   },
 
   signout: (): Promise<AxiosResponse<{ message: string }>> => {
-    return api.post(getApiPath('/auth/signout'));
+    return api.post(getApiPath('/signout'));
   },
 };
 

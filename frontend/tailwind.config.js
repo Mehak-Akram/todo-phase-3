@@ -1,7 +1,8 @@
 module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx}",
-    "./src/components/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -65,11 +66,11 @@ module.exports = {
   plugins: [
     // Enable arbitrary values support
     function ({ addUtilities }) {
-      addUtilities({
+      const newUtilities = {
         '.mix-blend-multiply': {
           'mix-blend-mode': 'multiply'
         },
-        '.filter': {
+        '.filter-blur-0': {
           'filter': 'blur(0)'
         },
         '.blur-3xl': {
@@ -87,13 +88,15 @@ module.exports = {
         '.border-white\\/60': {
           'border-color': 'rgba(255, 255, 255, 0.6)',
         },
-        '.shadow-\\[0_20px_50px_rgba\\(0\\,0\\,0\\,0\\.1\\)\\]': {
+        '.shadow-custom-1': {
           'box-shadow': '0 20px 50px rgba(0, 0, 0, 0.1)',
         },
-        '.shadow-\\[0_8px_25px_rgba\\(0\\,123\\,255\\,0\\.4\\)\\]': {
+        '.shadow-custom-2': {
           'box-shadow': '0 8px 25px rgba(0, 123, 255, 0.4)',
         },
-      })
+      }
+
+      addUtilities(newUtilities, ['responsive', 'hover']);
     },
   ],
 }

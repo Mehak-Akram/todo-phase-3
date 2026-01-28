@@ -1,1 +1,5 @@
-runtime: docker
+type: docker
+gpu: false
+cpu: 2
+memory: 8GiB
+space_sdk: docker

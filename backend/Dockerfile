@@ -7,23 +7,29 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     gcc \
     postgresql-client \
+    sqlite3 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first to leverage Docker cache
 COPY requirements.txt .
-
-# Install Python dependencies
+RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY src/ ./src/
 
-# Create a default .env file with SQLite as fallback for Hugging Face Spaces
-RUN echo "DATABASE_URL=sqlite:///./todo_app.db" > .env
-RUN echo "SECRET_KEY=hf-space-dev-secret-key-change-this-in-production" >> .env
-RUN echo "DEBUG=true" >> .env
+# Create volumes for persistent storage (important for Hugging Face Spaces)
+VOLUME ["/app/data", "/root/.env"]
 
-# Expose port
+# Create a default .env file with SQLite as fallback for Hugging Face Spaces
+RUN echo "# Hugging Face Space Configuration" > .env
+RUN echo "DATABASE_URL=sqlite:///./todo_app_hf.db" >> .env
+RUN echo "SECRET_KEY=hf-space-temp-secret-key-you-should-change-this" >> .env
+RUN echo "DEBUG=true" >> .env
+RUN echo "OPENROUTER_MODEL=google/gemini-2.5-flash" >> .env
+RUN echo "" >> .env
+
+# Expose port (Hugging Face Spaces typically uses PORT env var)
 EXPOSE 8000
 
 # Set environment variables
@@ -31,8 +37,8 @@ ENV PYTHONPATH=/app
 ENV PORT=8000
 
 # Create entrypoint script for better error handling
-RUN echo '#!/bin/bash\nset -e\npython -c "from src.database.database import create_db_and_tables; create_db_and_tables()"\necho "Database initialized successfully"\nexec uvicorn src.main:app --host 0.0.0.0 --port $PORT --reload' > /app/entrypoint.sh
+RUN echo '#!/bin/bash\nset -e\necho "Initializing database..."\npython -c "from src.database.database import create_db_and_tables; create_db_and_tables()"\necho "Database initialized successfully"\necho "Starting application on port $PORT..."\nexec uvicorn src.main:app --host 0.0.0.0 --port $PORT --workers 1' > /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
-# Run database initialization and start the application
+# Run the application
 ENTRYPOINT ["/app/entrypoint.sh"]

@@ -1,98 +1,88 @@
-<!--
-Sync Impact Report:
-- Version change: 1.0.0 → 1.1.0 (technology matrix amendment)
-- Modified principles: Technology Stack Constraints (Phase-based requirements)
-- Added sections: Phase I, Phase II, Phase III technology constraints with rules
-- Removed sections: N/A
-- Templates requiring updates:
-  - .specify/templates/plan-template.md ✅ updated
-  - .specify/templates/spec-template.md ✅ updated
-  - .specify/templates/tasks-template.md ✅ updated
-  - .specify/templates/commands/*.md ⚠ pending review
-- Follow-up TODOs: None
+<!-- SYNC IMPACT REPORT
+Version change: 1.0.0 → 1.1.0
+Modified principles: None (new constitution)
+Added sections: All sections (new constitution)
+Removed sections: None
+Templates requiring updates:
+- .specify/templates/plan-template.md ✅ updated
+- .specify/templates/spec-template.md ✅ updated
+- .specify/templates/tasks-template.md ✅ updated
+- .specify/templates/commands/*.md ⚠ pending
+Follow-up TODOs: None
 -->
 
-# Evolution of Todo Constitution
+# Todo Full-Stack Application Constitution
 
 ## Core Principles
 
-### Spec-Driven Development Mandate
-All development must follow the approved specification lifecycle: Constitution → Specs → Plan → Tasks → Implement. No agent may write code without approved specs and tasks. This ensures alignment with business requirements and prevents scope creep.
+### I. Spec-Driven Development (MANDATORY)
+All development follows the approved specification lifecycle: Constitution → Specifications → Plan → Tasks → Implementation. No code may be written without approved specifications and tasks. All features must be traced back to approved requirements in the specification documents.
 
-### Agent Behavior Rules
-Agents must strictly follow approved specifications without deviation. No manual coding by humans, no feature invention, no deviation from approved specifications. Refinement must occur at spec level, not code level. This maintains consistency and quality across all development activities.
+### II. Clean Architecture & Separation of Concerns
+Maintain clear separation between backend and frontend layers with well-defined interfaces. Backend provides RESTful API services while frontend handles presentation logic. Each layer must be independently testable and maintainable.
 
-### Phase Governance
-Each phase is strictly scoped by its specification. Future-phase features must never leak into earlier phases. Architecture may evolve only through updated specs and plans. This ensures proper sequencing and prevents premature implementation of complex features.
+### III. Test-First Approach (NON-NEGOTIABLE)
+All functionality must be developed using TDD: Tests written → Requirements verified → Tests fail → Then implement. Both unit and integration tests are required before any feature is considered complete. Red-Green-Refactor cycle strictly enforced.
 
-### Technology Stack Constraints
-Phase I: In-memory console application only. No web frontend, authentication, or database allowed.
+### IV. Security-First Development
+Authentication and authorization must be implemented at both frontend and backend layers. User data isolation is mandatory - users can only access their own data. All sensitive data must be properly validated and sanitized to prevent injection attacks.
 
-Phase II: Backend must use Python REST API with SQLModel or equivalent. Database must use Neon Serverless PostgreSQL. Frontend must use Next.js (React, TypeScript). Authentication must use Better Auth (signup/signin). Architecture must be full-stack web application. OpenAI Agents SDK and MCP are required for agent functionality. Containerization must use Docker with Kubernetes orchestration (in later phases). Message queuing must use Kafka and Dapr (in later phases). This ensures architectural consistency and maintainability across phases.
+### V. Cloud-Native Readiness
+Design for scalability and resilience with stateless services where possible. Use modern cloud infrastructure patterns with proper error handling, retry mechanisms, and circuit breakers. Applications must be deployable on containerized platforms.
 
-Phase III and later: Advanced cloud infrastructure, agents, AI, orchestration allowed. This ensures proper sequencing and prevents premature implementation of complex features.
+### VI. API-First Design
+All backend functionality must be exposed through well-documented RESTful APIs. API contracts must be defined before implementation and maintained as living documentation. All API endpoints must follow consistent patterns and return appropriate HTTP status codes.
 
-### Quality Principles
-All code must follow clean architecture principles with clear separation of concerns. Services must be stateless where required. Code must be cloud-native ready. These principles ensure maintainable, scalable, and deployable software solutions.
+## Technology Stack Requirements
 
-### Compliance and Verification
-All work must be verifiable against the constitution. Agents must validate compliance with all principles before implementing. This ensures the constitution remains the governing document for all development activities.
+### Backend Requirements
+- Python 3.11 with FastAPI framework
+- SQLModel for ORM and database interactions
+- Neon Serverless PostgreSQL for persistent storage
+- Better Auth for authentication services
+- JWT tokens for session management
+- Pydantic for request/response validation
 
-## Technology Constraints
+### Frontend Requirements
+- Next.js framework with TypeScript
+- React for component architecture
+- Tailwind CSS for styling
+- Responsive design supporting desktop and mobile
+- Proper error handling and loading states
+- State management using React Context or similar
 
-The Evolution of Todo project must adhere to the following technology stack by phase:
-
-### Phase I (Current)
-- Backend: In-memory console application only
-- Database: None
-- Frontend: None
-- Authentication: Not allowed
-- Other: Console-based only
-
-### Phase II (Next)
-- Backend: Python REST API
-- Database: Neon Serverless PostgreSQL
-- ORM/Data layer: SQLModel or equivalent
-- Frontend: Next.js (React, TypeScript)
-- Authentication: Better Auth (signup/signin)
-- Architecture: Full-stack web application
-- Agent SDK: OpenAI Agents SDK
-- Protocol: MCP (Model Context Protocol)
-- Containerization: Docker
-- Orchestration: Kubernetes (for later phases)
-- Message Queuing: Kafka and Dapr (for later phases)
-
-### Phase III and Later
-- Advanced cloud infrastructure, agents, AI, orchestration allowed
-
-**Rules:**
-- Authentication is allowed starting Phase II
-- Web frontend is allowed starting Phase II
-- Neon PostgreSQL is allowed starting Phase II
-- No AI or agent frameworks until later phases
-- Phase isolation must be preserved - future-phase features must not leak into earlier phases
-
-Any deviation from this stack requires explicit approval and constitutional amendment.
+### Infrastructure & DevOps
+- Docker for containerization
+- Environment-specific configuration management
+- Automated testing pipelines
+- Code quality checks and linting
+- Secure deployment practices
 
 ## Development Workflow
 
-All development must follow the Spec-Driven Development lifecycle:
-1. Constitution defines the governing principles
-2. Specifications define the feature requirements
-3. Architecture plans define the implementation approach
-4. Task lists break down implementation into testable units
-5. Implementation follows the approved tasks
+### Code Quality Standards
+- All code must follow established style guides (PEP 8 for Python, TypeScript best practices)
+- Comprehensive documentation for public interfaces
+- Proper error handling with meaningful messages
+- Input validation on both frontend and backend
+- Consistent naming conventions across the codebase
 
-Code reviews must verify compliance with all constitutional principles. No code may be merged that violates these principles without proper amendment.
+### Review & Approval Process
+- All code changes require peer review before merging
+- Specification compliance verification required
+- Automated tests must pass before merge
+- Security checks must be performed on authentication features
+- Performance considerations evaluated for database queries
+
+### Quality Gates
+- 80% test coverage minimum for new features
+- All API endpoints must have corresponding tests
+- Frontend components must be responsive and accessible
+- Database migrations must be safe and reversible
+- Authentication flows must be thoroughly tested
 
 ## Governance
 
-This constitution is the supreme governing document for all agents working on the Evolution of Todo project. It supersedes all other practices and guidelines.
+All development must comply with this constitution. Amendments require documentation of changes, approval from project stakeholders, and a migration plan for existing code. All pull requests and reviews must verify constitutional compliance. Complexity must be justified with clear benefits outweighing costs. Use this constitution as the primary guidance for development decisions.
 
-Amendments to this constitution require formal documentation, approval from project leadership, and a migration plan for existing code. All agents must comply with the current version of the constitution.
-
-The constitution must remain stable across all phases and act as the consistent governing document for all agents. Any conflicts between this constitution and other documents must be resolved in favor of the constitution.
-
-Compliance reviews will be conducted regularly to ensure all ongoing work aligns with constitutional principles.
-
-**Version**: 1.1.0 | **Ratified**: 2025-12-24 | **Last Amended**: 2025-12-26
+**Version**: 1.1.0 | **Ratified**: 2026-01-15 | **Last Amended**: 2026-01-15

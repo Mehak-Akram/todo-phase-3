@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    background-color: #ffffff; /* White background */
+    color: #1e40af; /* Blue text */
+  }
+}
+
+@layer components {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .container {
+    @apply bg-blue-50 min-h-[70vh] p-2 flex flex-col justify-center items-center w-full max-w-full;
+  }
+
+  main {
+    @apply py-20 flex-1 flex flex-col justify-center items-center;
+  }
+
+  .title {
+    @apply m-0 leading-[1.15] text-4xl text-center text-blue-800;
+  }
+
+  .title,
+  .description {
+    @apply text-center;
+  }
+
+  .description {
+    @apply leading-6 text-xl text-blue-800;
+  }
+
+  .grid {
+    @apply flex items-center justify-center flex-wrap max-w-[800px] mt-12;
+  }
+
+  .card {
+    @apply m-4 p-6 text-inherit no-underline border border-blue-500 rounded-xl transition-colors duration-150 ease-in-out w-2/5 bg-white;
+  }
+
+  .card:hover,
+  .card:focus,
+  .card:active {
+    @apply text-blue-700 border-blue-700 bg-blue-100;
+  }
+
+  .card h2 {
+    @apply m-0 mb-4 text-xl text-blue-800;
+  }
+
+  .card p {
+    @apply m-0 text-lg leading-6 text-blue-800;
+  }
+}
+
+/* Responsive design for all devices */
+@media (max-width: 1024px) {
+  .grid {
+    @apply w-11/12; /* Changed from w-9/10 to w-11/12 as w-9/10 doesn't exist */
+  }
+
+  .card {
+    @apply w-full m-4 mx-0;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    @apply w-full flex-col;
+  }
+
+  .card {
+    @apply w-11/12 m-2; /* Changed from w-9/10 to w-11/12 as w-9/10 doesn't exist */
+  }
+
+  .title {
+    @apply text-2xl;
+  }
+
+  .description {
+    @apply text-lg;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    @apply py-8;
+  }
+
+  .title {
+    @apply text-2xl;
+  }
+
+  .container {
+    @apply p-4;
+  }
+
+  .card {
+    @apply w-11/12 p-4; /* Changed from w-19/20 to w-11/12 as w-19/20 doesn't exist */
+  }
+}
