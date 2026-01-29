@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Settings(BaseSettings):
-    database_url: str = os.getenv("DATABASE_URL", "postgresql://neondb_owner:npg_zoWBrQ2Oq7cA@ep-polished-term-ahxz1cvz-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require")
+    database_url: str = os.getenv("DATABASE_URL", "")
     secret_key: str = os.getenv("SECRET_KEY", "dev-secret-key")
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
