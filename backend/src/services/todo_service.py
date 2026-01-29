@@ -6,12 +6,8 @@ from ..models.user import User
 
 def get_todos_by_user(session: Session, user_id: UUID) -> List[Todo]:
     """Get all todos for a specific user"""
-    print(f"DEBUG: Fetching todos for user_id: {user_id}")
     statement = select(Todo).where(Todo.user_id == user_id)
     todos = session.exec(statement).all()
-    print(f"DEBUG: Found {len(todos)} todos for user {user_id}")
-    for i, todo in enumerate(todos):
-        print(f"DEBUG: Todo {i+1}: ID={todo.id}, Content='{todo.content}', Completed={todo.completed}, Created={todo.created_at}")
     return todos
 
 def get_todo_by_id(session: Session, todo_id: UUID, user_id: UUID) -> Optional[Todo]:
@@ -22,7 +18,6 @@ def get_todo_by_id(session: Session, todo_id: UUID, user_id: UUID) -> Optional[T
 
 def create_todo(session: Session, todo_create: TodoCreate, user_id: UUID) -> Todo:
     """Create a new todo for a user"""
-    print(f"DEBUG: Creating todo for user_id: {user_id}, content: {todo_create.content}")
     db_todo = Todo(
         content=todo_create.content,
         completed=todo_create.completed,
@@ -33,14 +28,6 @@ def create_todo(session: Session, todo_create: TodoCreate, user_id: UUID) -> Tod
     session.add(db_todo)
     session.commit()
     session.refresh(db_todo)
-    print(f"DEBUG: Todo created successfully - ID: {db_todo.id}, content: {db_todo.content}, user_id: {db_todo.user_id}, completed: {db_todo.completed}")
-
-    # Double-check that the todo is in the database by querying it
-    check_todo = session.get(Todo, db_todo.id)
-    if check_todo:
-        print(f"DEBUG: Verified todo exists in DB - ID: {check_todo.id}, content: {check_todo.content}")
-    else:
-        print(f"ERROR: Todo not found after creation - ID: {db_todo.id}")
 
     return db_todo
 

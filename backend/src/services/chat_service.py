@@ -44,21 +44,17 @@ class ChatService:
         session.refresh(user_message)
 
         # Process with AI agent - pass the database session for consistency
-        print(f"DEBUG: About to process message with agent - session hash: {hash(session) if session else 'None'}, user_id: {user_id}")
         agent_response = await self.agent_service.process_message(
             user_message=user_message.content,
             user_id=user_id,
             conversation_id=str(conversation.id),
             db_session=session  # Pass the current session for consistency
         )
-        print(f"DEBUG: Agent response received - checking if any todos were created via tools")
 
         # After agent processing, make sure to commit the session to persist any changes made by tools
         try:
             session.commit()
-            print("DEBUG: Committed session after agent processing to save tool changes")
         except Exception as e:
-            print(f"DEBUG: Error committing session after agent processing: {e}")
             session.rollback()
             raise e
 

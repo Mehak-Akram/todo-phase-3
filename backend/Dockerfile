@@ -25,7 +25,7 @@ VOLUME ["/app/data", "/root/.env"]
 RUN echo "# Hugging Face Space Configuration" > .env
 RUN echo "DATABASE_URL=sqlite:///./todo_app_hf.db" >> .env
 RUN echo "SECRET_KEY=hf-space-temp-secret-key-you-should-change-this" >> .env
-RUN echo "DEBUG=true" >> .env
+RUN echo "DEBUG=false" >> .env
 RUN echo "OPENROUTER_MODEL=google/gemini-2.5-flash" >> .env
 RUN echo "" >> .env
 

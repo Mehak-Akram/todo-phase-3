@@ -3,6 +3,7 @@ from typing import Dict, Any, Optional
 from sqlmodel import Session
 from datetime import datetime
 import uuid
+import logging
 
 from ..models.todo import Todo, TodoCreate
 from ..database.database import engine
@@ -41,9 +42,6 @@ class CreateTodoTool:
                      db_session=None) -> Dict[str, Any]:
         """Execute the create todo operation."""
         try:
-            # DEBUG: Log the incoming parameters
-            print(f"DEBUG: CreateTodoTool.execute called - title: {title}, user_id: {user_id}, db_session: {db_session is not None}")
-
             # Combine title and description if both are provided
             combined_title = title
             if description and description.lower() not in ['none', 'null', '', 'undefined']:
@@ -63,7 +61,7 @@ class CreateTodoTool:
                         parsed_due_date = datetime.strptime(due_date, "%Y-%m-%dT%H:%M:%S")
                     except ValueError:
                         # If still wrong, log but continue without due date
-                        print(f"Warning: Invalid due date format: {due_date}")
+                        logging.warning(f"Invalid due date format: {due_date}")
 
             # Create TodoCreate object
             todo_create = TodoCreate(
@@ -90,24 +88,16 @@ class CreateTodoTool:
             # Use the provided database session if available, otherwise create a new one
             if db_session:
                 # Use the provided session to ensure consistency with the calling context
-                print(f"DEBUG: Using provided db_session for todo creation - user_id: {user_id}, content: {combined_title}")
                 new_todo = service_create_todo(
                     session=db_session,
                     todo_create=todo_create,
                     user_id=user_uuid
                 )
 
-                print(f"DEBUG: Todo created in database - ID: {new_todo.id}, content: {new_todo.content}, user_id: {new_todo.user_id}")
-
-                # We should NOT commit here since the main request flow handles the commit
-                # Committing here can interfere with the main transaction
-                print(f"DEBUG: Not committing session in tool - main request flow should handle commit")
-
                 # Note: Don't commit here as the main request flow handles the commit
             else:
                 # Fallback to creating a new session if none provided
                 # This maintains backward compatibility
-                print(f"DEBUG: Creating new session for todo creation - user_id: {user_id}, content: {combined_title}")
                 with Session(engine) as session:
                     new_todo = service_create_todo(
                         session=session,
@@ -115,9 +105,6 @@ class CreateTodoTool:
                         user_id=user_uuid
                     )
 
-                    print(f"DEBUG: Todo created with new session - ID: {new_todo.id}, content: {new_todo.content}")
-
-            print(f"DEBUG: Returning success for todo creation: {combined_title}")
             return {
                 "success": True,
                 "message": f"Todo '{combined_title}' created successfully",

@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     secret_key: str = os.getenv("SECRET_KEY", "dev-secret-key")
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
-    debug: bool = os.getenv("DEBUG", "true").lower() == "true"
+    debug: bool = os.getenv("DEBUG", "false").lower() == "true"
 
     # OpenRouter Configuration
     openrouter_api_key: str = os.getenv("OPENROUTER_API_KEY", "")

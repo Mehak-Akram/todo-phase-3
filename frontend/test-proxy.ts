@@ -6,8 +6,6 @@ import axios from 'axios';
 // Test the proxy route
 async function testProxyRoute() {
   try {
-    console.log('Testing proxy route...');
-    
     // This would be tested when the Next.js app is running
     const response = await axios.post('http://localhost:3000/api/chat-proxy', {
       message: 'Hello, test message',
@@ -17,8 +15,6 @@ async function testProxyRoute() {
         'Content-Type': 'application/json'
       }
     });
-    
-    console.log('Proxy route test successful:', response.data);
   } catch (error) {
     console.error('Proxy route test failed:', error);
   }

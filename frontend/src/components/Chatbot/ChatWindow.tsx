@@ -84,9 +84,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ userId, onTodoChange }) 
       setMessages(prev => [...prev, userMessage]);
 
       // Send message to backend
-      console.log("DEBUG: Sending message to chat API:", messageText);
       const response = await chatApi.sendMessage(messageText);
-      console.log("DEBUG: Chat API response received:", response);
 
       // Add AI response to messages
       const aiMessage: Message = {
@@ -103,22 +101,15 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ userId, onTodoChange }) 
       if (onTodoChange) {
         // Check if the AI response indicates a todo action was performed
         const isTodoAction = checkIfTodoAction(response.response);
-        console.log("DEBUG: Is todo action detected?", isTodoAction, "Response:", response.response);
 
         // Always trigger refresh if it looks like a todo was created/modified, regardless of certainty
         if (isTodoAction || response.response.toLowerCase().includes('todo')) {
-          console.log("DEBUG: Detected potential todo action, triggering refresh with retry");
-
           // Retry mechanism to ensure the todo is saved before refreshing
           const refreshWithRetry = async (retriesLeft: number) => {
             try {
-              console.log(`DEBUG: Attempting refresh, retries left: ${retriesLeft}`);
               await onTodoChange();
-              console.log("DEBUG: Refresh successful");
             } catch (error) {
-              console.error("DEBUG: Refresh failed:", error);
               if (retriesLeft > 0) {
-                console.log(`Retrying refresh (${3 - retriesLeft}/3)...`);
                 setTimeout(() => refreshWithRetry(retriesLeft - 1), 1500); // Shorter delay between retries
               } else {
                 console.error('Failed to refresh todos after multiple attempts', error);
@@ -128,8 +119,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ userId, onTodoChange }) 
 
           // Wait for backend to process, then refresh with retry
           setTimeout(() => refreshWithRetry(2), 1000); // Shorter initial delay
-        } else {
-          console.log("DEBUG: No todo action detected, skipping refresh");
         }
       }
     } catch (err) {

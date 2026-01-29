@@ -132,10 +132,8 @@ class AgentService:
                         function_args['db_session'] = db_session
 
                     # Execute the tool
-                    print(f"DEBUG: Executing tool {function_name} with args: {function_args}")
                     tool_instance = self.tool_map[function_name]
                     result = await tool_instance.execute(**function_args)
-                    print(f"DEBUG: Tool {function_name} execution result: {result}")
 
                     tool_results.append({
                         "tool_call_id": tool_call.id,

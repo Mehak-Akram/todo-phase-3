@@ -234,36 +234,24 @@ export default function Todos() {
       {/* Chatbot Floating Icon */}
       <ChatbotFloatingIcon onTodoChange={async () => {
         // Refresh todos when chatbot makes changes
-        console.log("DEBUG: Initiating todos refresh after chatbot action");
-        console.log("DEBUG: Current todo count before refresh:", todos.length);
-
         try {
           // Add a delay to ensure backend has processed the request
-          console.log("DEBUG: Waiting 2000ms for backend to commit...");
           await new Promise(resolve => setTimeout(resolve, 2000)); // Increased delay
 
           // Make a fresh API call to get the latest todos
-          console.log("DEBUG: Fetching latest todos from API");
           const response = await todoAPI.getTodos();
-          console.log("DEBUG: Raw API response:", response);
-          console.log("DEBUG: Response status:", response.status);
-          console.log("DEBUG: Response data:", response.data);
 
           // Extract todos array from response - backend returns direct array, not wrapped in 'todos' property
           const todosData = Array.isArray(response.data) ? response.data : [];
-          console.log("DEBUG: Processed todos data:", todosData);
 
           // Update the todos state with fresh data
           setTodos(Array.isArray(todosData) ? [...todosData] : []);
-
-          console.log(`DEBUG: Todos refreshed successfully after chatbot action. New total todos: ${todosData.length}`);
 
           // Clear any previous errors after successful refresh
           if (error) {
             setError('');
           }
         } catch (err: any) {
-          console.error('DEBUG: Error refreshing todos:', err);
           // Don't overwrite existing error if it's already set
           if (!error) {
             setError(err.message || 'Failed to load todos after chatbot action');

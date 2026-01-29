@@ -5,6 +5,7 @@ from .api.chat_api import router as chat_router
 from .database.database import create_db_and_tables
 import os
 from dotenv import load_dotenv
+import logging
 
 # Load environment variables
 load_dotenv()
@@ -34,7 +35,7 @@ def on_startup():
     try:
         create_db_and_tables()
     except Exception as e:
-        print(f"Database initialization error: {e}")
+        logging.error(f"Database initialization error: {e}")
         # Continue startup even if DB init fails to avoid blocking the app
 
 @app.get("/")
