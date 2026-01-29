@@ -28,8 +28,8 @@ export default function Todos() {
       try {
         setLoading(true);
         const response = await todoAPI.getTodos();
-        // Ensure response.data.todos is an array before setting
-        const todosData = Array.isArray(response.data.todos) ? response.data.todos : [];
+        // Response data is a direct array from backend, not wrapped in 'todos' property
+        const todosData = Array.isArray(response.data) ? response.data : [];
         setTodos(todosData);
       } catch (err: any) {
         setError(err.message || 'Failed to load todos');
@@ -249,12 +249,12 @@ export default function Todos() {
           console.log("DEBUG: Response status:", response.status);
           console.log("DEBUG: Response data:", response.data);
 
-          // Extract todos array from response
-          const todosData = response.data.todos;
+          // Extract todos array from response - backend returns direct array, not wrapped in 'todos' property
+          const todosData = Array.isArray(response.data) ? response.data : [];
           console.log("DEBUG: Processed todos data:", todosData);
 
           // Update the todos state with fresh data
-          setTodos([...todosData]);
+          setTodos(Array.isArray(todosData) ? [...todosData] : []);
 
           console.log(`DEBUG: Todos refreshed successfully after chatbot action. New total todos: ${todosData.length}`);
 

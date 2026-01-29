@@ -12,10 +12,13 @@ load_dotenv()
 app = FastAPI(title="Todo API", version="1.0.0")
 
 # CORS middleware
+# Get allowed origins from environment variable, with localhost as default
+cors_origins_str = os.getenv("CORS_ORIGINS", "https://your-vercel-frontend-url.vercel.app,http://localhost:3000")
+allowed_origins = [origin.strip() for origin in cors_origins_str.split(",") if origin.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:3001",
-                   "http://localhost:3002", "http://localhost:3003"],  # Frontend URL
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allow_headers=["*"],

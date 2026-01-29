@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// Using local proxy to avoid CORS issues with external API
-const API_BASE_URL = '';
+const CHAT_API_BASE_URL = process.env.NEXT_PUBLIC_CHAT_API_BASE_URL || process.env.NEXT_PUBLIC_API_URL;
 
 interface SendMessageParams {
   message: string;
@@ -17,9 +16,9 @@ interface SendMessageResponse {
   error: string | null;
 }
 
-// Create axios instance - using local proxy route
+// Create axios instance for direct API calls to HuggingFace backend
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: `${CHAT_API_BASE_URL}/api/v1`,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -34,7 +33,7 @@ class ChatApi {
       const token = localStorage.getItem('token');
 
       const response = await api.post<SendMessageResponse>(
-        '/api/chat-proxy',  // Using local proxy route
+        '/chat/',  // Direct route to HuggingFace backend
         {
           message,
           conversation_id: conversationId
@@ -62,7 +61,7 @@ class ChatApi {
       const token = localStorage.getItem('token');
 
       const response = await api.get<any[]>(
-        '/api/chat-conversations',  // Proxy route for conversations
+        '/chat/conversations',  // Direct route to HuggingFace backend
         {
           headers: {
             Authorization: token ? `Bearer ${token}` : undefined
@@ -86,7 +85,7 @@ class ChatApi {
       const token = localStorage.getItem('token');
 
       const response = await api.get<any>(
-        `/api/chat-messages/${conversationId}`,  // Proxy route for messages
+        `/chat/conversations/${conversationId}/messages`,  // Direct route to HuggingFace backend
         {
           headers: {
             Authorization: token ? `Bearer ${token}` : undefined
@@ -116,7 +115,7 @@ class ChatApi {
         success: boolean;
         deleted_messages_count: number;
       }>(
-        `/api/chat-delete-conversation/${conversationId}`,  // Proxy route for deletion
+        `/chat/conversations/${conversationId}`,  // Direct route to HuggingFace backend
         {
           headers: {
             Authorization: token ? `Bearer ${token}` : undefined
